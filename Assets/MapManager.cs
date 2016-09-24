@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class MapManager : MonoBehaviour
 {
@@ -16,9 +17,16 @@ public class MapManager : MonoBehaviour
 	public Material mapMat;
 	public Text coords;
 
+	List<string> markers = new List<string>
+	{
+		"&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222",
+		"&markers=size:mid%7Ccolor:0xFFFF00%7Clabel:C%7CTok",
+		"&markers=color:red%7Clabel:C%7C49.2813586,-123.12"
+	};
+
 	void Start ()
 	{
-		StartCoroutine(RequestMap(49.27763f,-123.1186f,14));
+		StartCoroutine(RequestMap(49.2813586f,-123.1171895f,14));
 
 		Input.location.Start(accuracyDistance,updateDistance);
 		lastLocationInfo = Input.location.lastData;
@@ -39,24 +47,31 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	string url = "";
+	
 	LocationInfo li;
-	Vector2 size = new Vector2(640,640);
+	Vector2 size = new Vector2(2048,2048);
 
 	public IEnumerator RequestMap(float lat, float lon, float zoom)
 	{
 
-		url = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lon+"&zoom="+zoom+"&size="+size.x+"x"+size.y+"&key="+"AIzaSyA3PCTWtIVqJkbp41RlYFsrba3eCkY8aTA";
+		string url = "";
+
+		url = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lon+"&zoom="+zoom+"&size="+size.x+"x"+size.y;
+
+		foreach (var m in markers)
+		{
+			url += m;
+		}
+
+		url += "&key="+"AIzaSyA3PCTWtIVqJkbp41RlYFsrba3eCkY8aTA";
+
+		Debug.Log(url);
 
 		WWW www = new WWW(url);
 
 		yield return www;
 
 		mapMat.mainTexture = www.texture;
-		//transform.position = new Vector3(lat,lon,0);
-
-		//playerMapObject.position = new Vector3(lat,lon,0);
-		//cameraObject.position = new Vector3(lat,lon,-5);
 	}
 
 	public void GoToGameScreen()
