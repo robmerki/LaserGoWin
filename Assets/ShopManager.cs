@@ -2,11 +2,12 @@
 using System.Collections;
 
 public static class ShopManager {
-	public const int laserCost = 1;
-	public const int goldRushCost = 10;
+	public const float laserCost = 0.2f;
+	public const float goldRushCost = 10f;
 
+	// laser is bought with money
 	public static bool buyLaser(int quant) {
-		int cost = quant * laserCost;
+		float cost = quant * laserCost;
 		if (cost > Player.moneyCount) {
 			return false;
 		} else {
@@ -16,14 +17,31 @@ public static class ShopManager {
 		}
 	}
 
+	// goldRush is bought with gems
 	public static bool buyGoldRush(int quant) {
-		int cost = quant * goldRushCost;
+		float cost = quant * goldRushCost;
 		if (cost > Player.gemCount) {
 			return false;
 		} else {
 			Player.gemCount -= cost;
 			Player.goldRushCount += quant;
 			return true;
+		}
+	}
+
+	public static void buyLaserButton() {
+		if (buyLaser (5)) {
+			// success
+		} else {
+			// not enough money
+		}
+	}
+
+	public static void buyGoldRushButton() {
+		if (buyGoldRush (1)) {
+			// success
+		} else {
+			// not enough gems
 		}
 	}
 }

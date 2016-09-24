@@ -27,17 +27,9 @@ public class GameManager : MonoBehaviour {
 //		new Vector3( 0f, 0f, -0.5f )
 //	};
 
-	public void StartGame(bool power) {
-		isPowered = power;
-		Reset ();
-		for (int i = 0; i < chestsPerGame; i++) {
-			AddTreasureChest (positions[i]);
-		}
-	}
-	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	// Use this for initialization
@@ -48,6 +40,14 @@ public class GameManager : MonoBehaviour {
 		}
 		instance = this;
 	}
+
+	public void StartGame(bool power) {
+		isPowered = power;
+		Reset ();
+		for (int i = 0; i < chestsPerGame; i++) {
+			AddTreasureChest (positions[i]);
+		}
+	}
 		
 	public void AddTreasureChest(Vector3 pos) {
 
@@ -57,5 +57,15 @@ public class GameManager : MonoBehaviour {
 
 	public void Reset() {
 		chests.Clear ();	
+	}
+
+	// shoots laser, returns true if player is out of lasers otherwise returns false
+	public bool shootLaser() {
+		if (Player.laserCount <= 0) {
+			// exception
+		}
+		Player.laserCount -= 1;
+		// todo: actually shoot laser in game world and handle results
+		return (Player.laserCount <= 0);
 	}
 }
