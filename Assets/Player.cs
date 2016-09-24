@@ -5,6 +5,7 @@ public static class Player {
 	public static int laserCount = 10;
 	public static int gemCount = 100;
 	public static int moneyCount = 10;
+	public static int goldRushCount = 2;
 	public static string name = "Meme MASTER";
 
 	// awards all contents in TreasureChest object

@@ -4,39 +4,23 @@ using System.Collections.Generic;
 
 public class TreasureChest : MonoBehaviour {
 	public List<TreasureContents> contents = new List<TreasureContents>();
-	System.Random rnd = new System.Random();
+	public System.Random rnd = new System.Random();
+	public int health;
 
 	// Use this for initialization
 	void Start () {
-		if (GameManager.instance.isPowered) {
-			initRegularChest ();
-		} else {
-			initPowerChest ();
-		}
 	}
 
 	// Update is called once per frame
 	void Update () {}
 
-	void initRegularChest() {
-		contents.Add (new TreasureContents ());
-	}
-
-	void initPowerChest() {
-		int treasureNum = rnd.Next(1,6);
-		if (treasureNum < 5)
-			treasureNum = 1;
-		else if (treasureNum < 6)
-			treasureNum = 2;
-		else
-			treasureNum = 3;
-		for (int i = 0; i < treasureNum; i++) {
-			contents.Add (new TreasureContents ());
-		}
-	}
-
 	void openChest() {
 		Player.awardChest (this);
+	}
+
+	bool hit() {
+		health = health - 1;
+		return (health <= 0);
 	}
 }
 
@@ -49,7 +33,7 @@ public class TreasureContents {
 
 	public TreasureContents () {
 		
-		switch (rnd.Next (1, 4)) {
+		switch (rnd.Next (1, 5)) {
 		case 1:
 			contentType = "money";
 			contentQuantity = getQuant (1,50);
@@ -68,13 +52,13 @@ public class TreasureContents {
 		}
 	}
 
-	// also sets rareTreasure
+	// when run, also sets rareTreasure bool on this instance
 	private int getQuant(int min, int max) {
 		int tempMax = max - min;
 		float quant;
 
 		rareTreasure = true;
-		int seed = rnd.Next (1, 100);
+		int seed = rnd.Next (1, 101);
 		if (seed < 80) {
 			quant = 0;
 			rareTreasure = false;
@@ -90,7 +74,7 @@ public class TreasureContents {
 		} else {
 			quant = 0.9f * tempMax;
 		}
-		quant = quant + (tempMax * 0.1f);
+		quant = quant + tempMax * (0.1f * rnd.Next(1, 11));
 		quant = quant + min;
 		return (int) Mathf.Floor (quant);
 	}
