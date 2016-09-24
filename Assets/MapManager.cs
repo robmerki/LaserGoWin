@@ -76,7 +76,7 @@ public class MapManager : MonoBehaviour
 
 	public void GoToGameScreen()
 	{
-		MasterManager.Instance.ChangeScene("main");
+		MasterManager.Instance.ChangeScene("GameScreen");
 	}
 
 	public void GoToShopScreen()
