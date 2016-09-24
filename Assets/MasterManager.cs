@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 // once at game start
 public class MasterManager : MonoBehaviour
 {
-
 	public static MasterManager Instance;
 
 	void Start ()
@@ -17,8 +16,8 @@ public class MasterManager : MonoBehaviour
 			return;
 		}
 		DontDestroyOnLoad(gameObject);
+		Instance = this;
 	}
-
 	public void ChangeScene(string sceneName)
 	{
 		SceneManager.LoadScene(sceneName);
