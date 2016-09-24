@@ -6,6 +6,12 @@ public class ShopManager : MonoBehaviour{
 	public const float laserCost = 0.2f;
 	public const float goldRushCost = 10f;
 
+	public void GoToMapScreen()
+	{
+		Debug.Log("go to map screen");
+		MasterManager.Instance.ChangeScene("MapScreen");
+	}
+
 	//every time the shop is opened
 	public void Start()
 	{
@@ -14,6 +20,7 @@ public class ShopManager : MonoBehaviour{
 
 	// laser is bought with money
 	public bool buyLaser(int quant) {
+		Debug.Log("bought lasers");
 		float cost = quant * laserCost;
 		if (cost > Player.moneyCount) {
 			return false;
@@ -26,6 +33,7 @@ public class ShopManager : MonoBehaviour{
 
 	// goldRush is bought with gems
 	public bool buyGoldRush(int quant) {
+		Debug.Log("bought goldrush");
 		float cost = quant * goldRushCost;
 		if (cost > Player.gemCount) {
 			return false;
