@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="snakeeyes" size="1.000000 1.730602" />
+    <ImageTarget name="goldrush" size="1.000000 2.219365" />
+    <ImageTarget name="cashmachine" size="1.000000 1.233485" />
+    <ImageTarget name="dice" size="1.000000 0.788544" />
+    <ImageTarget name="scratch_logo" size="0.030000 0.019951" />
+    <ImageTarget name="bclc_logo" size="0.030000 0.012673" />
+    <ImageTarget name="649_logo" size="0.030000 0.018721" />
+  </Tracking>
+</QCARConfig>
