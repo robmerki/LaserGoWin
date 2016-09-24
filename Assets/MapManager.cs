@@ -19,10 +19,30 @@ public class MapManager : MonoBehaviour
 
 	List<string> markers = new List<string>
 	{
-		"&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222",
-		"&markers=size:mid%7Ccolor:0xFFFF00%7Clabel:C%7CTok",
-		"&markers=color:red%7Clabel:C%7C49.2813586,-123.12"
+		//"&markers=color:blue%7Clabel:S%7C11211%7C11206%7C11222",
+		//"&markers=size:mid%7Ccolor:0xFFFF00%7Clabel:C%7CTok",
+		//"&markers=color:red%7Clabel:C%7C49.2813586,-123.12",
+		"&markers=color:red%7Clabel:C%7C49.2890615,-123.1412927",
+		"&markers=color:red%7Clabel:C%7C49.281148,-123.119334",
+		"&markers=color:red%7Clabel:C%7C49.283039,-123.115147",
+		"&markers=color:red%7Clabel:C%7C49.278847,-123.116423",
+		"&markers=color:red%7Clabel:C%7C49.279406,-123.122609",
+		"&markers=color:red%7Clabel:C%7C49.276736,-123.121911",
+		"&markers=color:red%7Clabel:C%7C49.276006,-123.127235"
+		//"&markers=color:red%7Clabel:C%7C49.2813586,-123.12",
+		//"&markers=color:red%7Clabel:C%7C49.2813586,-123.12",
 	};
+
+
+	/*
+	 * 49.2890615    -123.1412927
+49.281148    -123.119334
+49.283039    -123.115147
+49.278847    -123.116423
+49.279406    -123.122609
+49.276736    -123.121911
+49.276006    -123.127235
+	 * */
 
 	void Start ()
 	{
