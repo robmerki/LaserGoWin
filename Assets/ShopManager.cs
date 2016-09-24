@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public static class ShopManager {
+public class ShopManager : MonoBehaviour{
 	public const float laserCost = 0.2f;
 	public const float goldRushCost = 10f;
 
+	//every time the shop is opened
+	public void Start()
+	{
+
+	}
+
 	// laser is bought with money
-	public static bool buyLaser(int quant) {
+	public bool buyLaser(int quant) {
 		float cost = quant * laserCost;
 		if (cost > Player.moneyCount) {
 			return false;
@@ -18,7 +25,7 @@ public static class ShopManager {
 	}
 
 	// goldRush is bought with gems
-	public static bool buyGoldRush(int quant) {
+	public bool buyGoldRush(int quant) {
 		float cost = quant * goldRushCost;
 		if (cost > Player.gemCount) {
 			return false;
@@ -29,7 +36,7 @@ public static class ShopManager {
 		}
 	}
 
-	public static void buyLaserButton() {
+	public void buyLaserButton() {
 		if (buyLaser (5)) {
 			// success
 		} else {
@@ -37,7 +44,7 @@ public static class ShopManager {
 		}
 	}
 
-	public static void buyGoldRushButton() {
+	public void buyGoldRushButton() {
 		if (buyGoldRush (1)) {
 			// success
 		} else {
