@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
-	float accuracyDistance = 20;
-	float updateDistance = 20;
+	float accuracyDistance = 1;
+	float updateDistance = 1;
 
 	LocationInfo lastLocationInfo;
 	float mapUpdateLimit = 10; //10 seconds
@@ -14,6 +14,7 @@ public class MapManager : MonoBehaviour
 	public Transform playerMapObject;
 	public Transform cameraObject;
 	public Material mapMat;
+	public Text coords;
 
 	void Start ()
 	{
@@ -32,6 +33,8 @@ public class MapManager : MonoBehaviour
 				currentMapUpdate += Time.time + mapUpdateLimit;
 				lastLocationInfo = Input.location.lastData;
 				StartCoroutine(RequestMap(lastLocationInfo.latitude,lastLocationInfo.longitude,14));
+
+				coords.text = lastLocationInfo.latitude + "\n" + lastLocationInfo.longitude + "\n" + lastLocationInfo.timestamp;
 			}
 		}
 	}
