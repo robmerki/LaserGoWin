@@ -15,7 +15,7 @@ public class ShopManager : MonoBehaviour{
 	//every time the shop is opened
 	public void Start()
 	{
-
+		
 	}
 
 	// laser is bought with money
