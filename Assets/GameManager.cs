@@ -9,23 +9,15 @@ public class GameManager : MonoBehaviour {
 	public bool isPowered;
 	public List<TreasureChest> chests = new List<TreasureChest>();
 
+	[System.NonSerialized]
 	public Vector3[] positions = {
-		new Vector3( 0f, -2.5f, -0.5f ),
-		new Vector3( 3f, -2.5f, -0.5f ),
-		new Vector3( 0f, 0f, -0.5f ),
-		new Vector3( 3f, 0f, -0.5f ),
-		new Vector3( 0f, 2.5f, -0.5f ),
-		new Vector3( 3f, 2.5f, -0.5f )
+		new Vector3 (0f, -2.5f, -0.5f),
+		new Vector3 (3f, -2.5f, -0.5f),
+		new Vector3 (0f, 0f, -0.5f),
+		new Vector3 (3f, 0f, -0.5f),
+		new Vector3 (0f, 2.5f, -0.5f),
+		new Vector3 (3f, 2.5f, -0.5f)
 	};
-
-//	public Vector3[] positions = {
-//		new Vector3( 0f, 0f, -0.5f ),
-//		new Vector3( 0f, 0f, -0.5f ),
-//		new Vector3( 0f, 0f, -0.5f ),
-//		new Vector3( 0f, 0f, -0.5f ),
-//		new Vector3( 0f, 0f, -0.5f ),
-//		new Vector3( 0f, 0f, -0.5f )
-//	};
 
 	// Update is called once per frame
 	void Update () {
