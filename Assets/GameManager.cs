@@ -60,4 +60,9 @@ public class GameManager : MonoBehaviour {
 		// todo: actually shoot laser in game world and handle results
 		return (Player.laserCount <= 0);
 	}
+
+	public void GoToMapScreen()
+	{
+		MasterManager.Instance.ChangeScene("MapScreen");
+	}
 }
