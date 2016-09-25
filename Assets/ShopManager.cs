@@ -19,7 +19,19 @@ public class ShopManager : MonoBehaviour{
 	//every time the shop is opened
 	public void Start()
 	{
-		
+		UpdateNumbers();
+	}
+
+	public void UpdateNumbers()
+	{
+		GemText.text = Player.gemCount.ToString();
+		LaserText.text = Player.laserCount.ToString();
+		GoldRushText.text = Player.goldRushCount.ToString();
+	}
+
+	public void GoToCreditCardScreen()
+	{
+		MasterManager.Instance.ChangeScene("CreditCardScreen");
 	}
 
 	// laser is bought with money
@@ -38,7 +50,7 @@ public class ShopManager : MonoBehaviour{
 	// goldRush is bought with gems
 	public bool buyGoldRush(int quant) {
 		Debug.Log("bought goldrush");
-		float cost = quant * goldRushCost;
+		int cost = (int)(quant * goldRushCost);
 		if (cost > Player.gemCount) {
 			return false;
 		} else {
@@ -57,6 +69,16 @@ public class ShopManager : MonoBehaviour{
 	}
 
 	public void buyGoldRushButton() {
+
+		if (Player.gemCount >= 150)
+		{
+			Player.goldRushCount ++;
+			Player.gemCount -= 150;
+		}
+
+		UpdateNumbers();
+
+		return;
 		if (buyGoldRush (1)) {
 			// success
 		} else {
