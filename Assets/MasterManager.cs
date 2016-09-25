@@ -47,7 +47,7 @@ public class MasterManager : MonoBehaviour
 			Pools["chest"].Add((GameObject)GameObject.Instantiate(ChestPrefab));
 			Pools["superchest"].Add((GameObject)GameObject.Instantiate(SuperChestPrefab));
 			Pools["gem"].Add((GameObject)GameObject.Instantiate(GemPrefab));
-			Pools["laser"].Add((GameObject)GameObject.Instantiate(Laser));
+			Pools["laser"].Add((GameObject)GameObject.Instantiate(LaserPrefab));
 			Pools["cash"].Add((GameObject)GameObject.Instantiate(CashPrefab));
 			Pools["explode"].Add((GameObject)GameObject.Instantiate(ExplodeParticle));
 		}
@@ -71,7 +71,7 @@ public class MasterManager : MonoBehaviour
 				Pools["gem"].Add((GameObject)GameObject.Instantiate(GemPrefab));
 				break;
 			case "laser":
-				Pools["laser"].Add((GameObject)GameObject.Instantiate(Laser));
+				Pools["laser"].Add((GameObject)GameObject.Instantiate(LaserPrefab));
 				break;
 			case "cash":
 				Pools["cash"].Add((GameObject)GameObject.Instantiate(CashPrefab));
