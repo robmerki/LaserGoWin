@@ -16,11 +16,15 @@ public class ShopManager : MonoBehaviour{
 		MasterManager.Instance.ChangeScene("MapScreen");
 	}
 
+	public void GoToGameScreen()
+	{
+		MasterManager.Instance.ChangeScene("GameScreen");
+	}
+
 	//every time the shop is opened
 	public void Start()
 	{
 		UpdateNumbers();
-
 	}
 
 	public void UpdateNumbers()

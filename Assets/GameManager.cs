@@ -87,6 +87,11 @@ public class GameManager : MonoBehaviour {
 		MasterManager.Instance.ChangeScene("MapScreen");
 	}
 
+	public void GoToShopScreen()
+	{
+		MasterManager.Instance.ChangeScene("shop");
+	}
+
 	public void trackingFound (GameObject imageTrackerObject) {
 		if (gameRunnerInstance != null) {
 			// commenting this out for now
