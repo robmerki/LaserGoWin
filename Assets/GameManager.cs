@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		HideLaser();
+		UpdateLaserCount();
 		instance = this;
 	}
 
