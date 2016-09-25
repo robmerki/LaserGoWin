@@ -7,7 +7,7 @@ public class PowerChest : TreasureChest {
 	void Start () {
 		health = 2;
 		markedForDeletion = false;
-		int treasureNum = rnd.Next(1,7);
+		int treasureNum = Random.Range(1,7);
 
 		if (treasureNum < 5)
 			treasureNum = 1;

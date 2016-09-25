@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class TreasureChest : MonoBehaviour {
 	public List<TreasureContents> contents = new List<TreasureContents>();
-	public System.Random rnd = new System.Random();
 	public int health;
 	[System.NonSerialized]
 	public Vector3 currentTarget;
@@ -49,11 +48,10 @@ public class TreasureContents {
 	public int contentQuantity;
 	public int treasureQualifier;
 	public Vector3 position;
-	System.Random rnd = new System.Random();
 
 	public TreasureContents () {
 		
-		switch (rnd.Next (1, 5)) {
+		switch (Random.Range(1,5)) {
 		case 1:
 			contentType = "money";
 			contentQuantity = getQuant (1,50);
@@ -78,7 +76,7 @@ public class TreasureContents {
 		int tempMax = max - min;
 		float quant;
 
-		int seed = rnd.Next (1, 101);
+		int seed = Random.Range(1,101);
 		if (seed < 80) {
 			quant = 0;
 			treasureQualifier = 1;
@@ -98,7 +96,7 @@ public class TreasureContents {
 			quant = 0.9f * tempMax;
 			treasureQualifier = 6;
 		}
-		quant = quant + tempMax * (0.1f * rnd.Next(1, 11));
+		quant = quant + tempMax * (0.1f * Random.Range(1, 11));
 		quant = quant + min;
 		return (int) Mathf.Floor (quant);
 	}
