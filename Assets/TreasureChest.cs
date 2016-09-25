@@ -67,7 +67,8 @@ public class TreasureContents {
 			contentQuantity = getQuant (10,100);
 			break;
 		case 4:
-			contentType = "none";
+			contentType = "gem";
+			contentQuantity = getQuant (10, 100);
 			break;
 		}
 	}

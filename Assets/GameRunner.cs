@@ -14,7 +14,7 @@ public class GameRunner : MonoBehaviour {
 	public List<GameObject> chests = new List<GameObject>();
 	private GameObject parentImageTrackerObject;
 
-	private const float chestSpeed = 4.0f;
+	private const float chestSpeed = 2.0f;
 	private const int regChestRegGame = 6; // regular chests in regular game
 	private const int supChestRegGame = 0; // super chests in regular game
 	private const int regChestPowGame = 4; // regular chests in gold rush game
@@ -36,9 +36,9 @@ public class GameRunner : MonoBehaviour {
 	}
 
 
-	public void debugKillChest() {
-		chests [0].GetComponent<TreasureChest> ().markedForDeletion = true;
-	}
+//	public void debugKillChest() {
+//		chests [0].GetComponent<TreasureChest> ().markedForDeletion = true;
+//	}
 		
 	// Update is called once per frame
 	void Update () {
@@ -104,11 +104,11 @@ public class GameRunner : MonoBehaviour {
 			
 		GameObject go = (GameObject) GameObject.Instantiate (prefabToUse, startLoc, Quaternion.identity);
 		Vector3 p1 = startLoc;
-		Vector3 p4 = new Vector3 (0, 0, 0);
+		Vector3 p4 = new Vector3 (0, 0.7f, 0);
 		float scale = 2.0f;
 		Vector3 p2 = ((p1+p4) * 3/4) + (Vector3.up * 3.0f) + new Vector3(UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale));
 		Vector3 p3 = ((p1+p4) * 1/4) + (Vector3.up * 3.0f) + new Vector3(UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale));
-		LeanTween.move (go, new LTBezierPath (new Vector3[] {p1,p2,p3,p4}), 2.0f);
+		LeanTween.move (go, new LTBezierPath (new Vector3[] {p1,p2,p3,p4}), 2.0f).setDestroyOnComplete (true);;
 	}
 
 	public void StartGame(bool powered, GameObject parentImageTrackerObjectIn) {
