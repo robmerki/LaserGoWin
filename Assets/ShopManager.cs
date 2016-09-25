@@ -20,6 +20,7 @@ public class ShopManager : MonoBehaviour{
 	public void Start()
 	{
 		UpdateNumbers();
+
 	}
 
 	public void UpdateNumbers()

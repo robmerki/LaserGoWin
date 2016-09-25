@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour {
 		}
 		HideLaser();
 		UpdateLaserCount();
+		RefreshShootButton();
 		instance = this;
 	}
 
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour {
 	void UpdateLaserCount()
 	{
 		LaserCountText.text = Player.laserCount.ToString();
-		LaserCount.color = Player.laserCount > 0 ? ShootButtonColor : ShootButtonColorEmpty;
+		//LaserCount.color = Player.laserCount > 0 ? ShootButtonColor : ShootButtonColorEmpty;
 	}
 
 	void HideLaser()
