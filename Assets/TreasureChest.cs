@@ -12,7 +12,9 @@ public class TreasureChest : MonoBehaviour {
 	public bool goFast;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+		
 	}
 
 	// Update is called once per frame
@@ -22,8 +24,20 @@ public class TreasureChest : MonoBehaviour {
 		Player.awardChest (this);
 	}
 
-	bool hit() {
+	public bool hit() {
 		health = health - 1;
+
+		if (health == 0)
+		{
+			AudioSource.PlayClipAtPoint(MasterManager.Instance.ChestExplode,transform.position);
+		}
+		else
+		{
+			AudioSource.PlayClipAtPoint(MasterManager.Instance.ChestHit,transform.position);
+		}
+
+
+
 		return (health <= 0);
 	}
 }
@@ -33,6 +47,7 @@ public class TreasureContents {
 	public string contentType;
 	public int contentQuantity;
 	public bool rareTreasure;
+	public Vector3 position;
 	System.Random rnd = new System.Random();
 
 	public TreasureContents () {

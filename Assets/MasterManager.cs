@@ -8,6 +8,12 @@ public class MasterManager : MonoBehaviour
 {
 	public static MasterManager Instance;
 
+	public AudioClip Laser;
+	public AudioClip CoinsPickup;
+	public AudioClip ChestHit;
+	public AudioClip ChestExplode;
+	public AudioClip ItemPickup;
+
 	void Start ()
 	{
 		if (Instance != null)

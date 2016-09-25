@@ -17,6 +17,8 @@ public class MapManager : MonoBehaviour
 	public Material mapMat;
 	public Text coords;
 
+	public Vector2 InputPos;
+
 	//http://i.imgur.com/fOhHSpr.png //super
 	//http://i.imgur.com/7jbGAnD.png //normal
 
@@ -43,12 +45,15 @@ public class MapManager : MonoBehaviour
 		*/
 	};
 
+	void Enable()
+	{
+		Input.location.Start(accuracyDistance,updateDistance);
+		//lastLocationInfo = Input.location.lastData;
+	}
+
 	void Start ()
 	{
 		StartCoroutine(RequestMap(49.2813586f,-123.1171895f,14));
-
-		Input.location.Start(accuracyDistance,updateDistance);
-		lastLocationInfo = Input.location.lastData;
 	}
 
 	public void Update()
@@ -64,6 +69,20 @@ public class MapManager : MonoBehaviour
 				coords.text = lastLocationInfo.latitude + "\n" + lastLocationInfo.longitude + "\n" + lastLocationInfo.timestamp;
 			}
 		}
+
+		if (Input.touchCount == 1)
+		{
+			InputPos += Input.GetTouch(0).deltaPosition;
+			InputPos.x = (InputPos.x / Screen.width) * 5;
+			InputPos.y = (InputPos.y / Screen.height) * 5;
+
+			Camera.main.transform.position -= new Vector3(InputPos.x,InputPos.y,0);
+		}
+
+		if (Input.touchCount == 0)
+		{
+			Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,new Vector3(0,1,-10),0.1f);
+		}
 	}
 
 	string key = "AIzaSyA3PCTWtIVqJkbp41RlYFsrba3eCkY8aTA";
@@ -75,7 +94,7 @@ public class MapManager : MonoBehaviour
 		//lock this down!
 		string url = "";
 
-		url = "https://maps.googleapis.com/maps/api/staticmap?key="+key+"&center="+lat+","+lon+"&zoom="+zoom+"&format=png&maptype=roadmap&style=feature:administrative%7Celement:geometry.fill%7Csaturation:28%7Clightness:-34&style=feature:administrative%7Celement:labels.icon%7Cvisibility:off&style=feature:administrative%7Celement:labels.text%7Cvisibility:on&style=feature:landscape%7Celement:geometry.fill%7Csaturation:-61%7Clightness:28%7Cgamma:1.09&style=feature:poi%7Celement:geometry.fill%7Csaturation:-39%7Clightness:-21%7Cgamma:1.76&style=feature:poi%7Celement:labels.icon%7Cvisibility:off&style=feature:poi%7Celement:labels.text%7Cvisibility:off&style=feature:road%7Celement:geometry.stroke%7Csaturation:40%7Clightness:-24%7Cgamma:8.24&style=feature:road%7Celement:labels.icon%7Cvisibility:off&style=feature:road%7Celement:labels.text%7Cvisibility:off&style=feature:transit%7Celement:geometry.fill%7Csaturation:73&style=feature:transit%7Celement:labels.icon%7Cvisibility:off&style=feature:transit%7Celement:labels.text%7Cvisibility:off&style=feature:water%7Celement:geometry.fill%7Csaturation:29%7Clightness:-6&size=2048x2048";
+		url = "https://maps.googleapis.com/maps/api/staticmap?key="+key+"&center="+lat+","+lon+"&zoom="+zoom+"&format=png&maptype=roadmap&style=feature:administrative%7Celement:geometry.fill%7Csaturation:28%7Clightness:-34&style=feature:administrative%7Celement:labels.icon%7Cvisibility:off&style=feature:administrative%7Celement:labels.text%7Cvisibility:on&style=feature:landscape%7Celement:geometry.fill%7Csaturation:-61%7Clightness:28%7Cgamma:1.09&style=feature:poi%7Celement:geometry.fill%7Csaturation:-39%7Clightness:-21%7Cgamma:1.76&style=feature:poi%7Celement:labels.icon%7Cvisibility:off&style=feature:poi%7Celement:labels.text%7Cvisibility:off&style=feature:road%7Celement:geometry.stroke%7Csaturation:40%7Clightness:-24%7Cgamma:8.24&style=feature:road%7Celement:labels.icon%7Cvisibility:off&style=feature:road%7Celement:labels.text%7Cvisibility:off&style=feature:transit%7Celement:geometry.fill%7Csaturation:73&style=feature:transit%7Celement:labels.icon%7Cvisibility:off&style=feature:transit%7Celement:labels.text%7Cvisibility:off&style=feature:water%7Celement:geometry.fill%7Csaturation:29%7Clightness:-6&size="+size.x+"x"+size.y;
 
 
 		//url = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lon+"&zoom="+zoom+"&size="+size.x+"x"+size.y;
