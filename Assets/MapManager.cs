@@ -12,10 +12,16 @@ public class MapManager : MonoBehaviour
 	float mapUpdateLimit = 10; //10 seconds
 	float currentMapUpdate = 0;
 
+	float timerToGoldRushButton;
+	bool buttonAppeared;
+	bool buttonFlash;
+
 	public Transform playerMapObject;
 	public Transform cameraObject;
 	public Material mapMat;
 	public Text coords;
+	public GameObject goldRushButton1;
+	public GameObject goldRushButton2;
 
 	public Vector2 InputPos;
 
@@ -54,10 +60,38 @@ public class MapManager : MonoBehaviour
 	void Start ()
 	{
 		StartCoroutine(RequestMap(49.2813586f,-123.1171895f,14));
+		timerToGoldRushButton = 10.0f;
+		buttonAppeared = false;
+		buttonFlash = true;
+	}
+
+	void switchButton() {
+		buttonFlash = !buttonFlash;
+		if (buttonFlash) {
+			goldRushButton1.SetActive (true);
+			goldRushButton2.SetActive (false);
+		} else {
+			goldRushButton1.SetActive (false);
+			goldRushButton2.SetActive (true);
+		}
 	}
 
 	public void Update()
 	{
+		timerToGoldRushButton -= Time.deltaTime;
+		if (!buttonAppeared) {
+			if (timerToGoldRushButton <= 0) {
+				goldRushButton1.SetActive (true);
+				buttonAppeared = true;
+				timerToGoldRushButton = 0.5f;
+			}
+		} else {
+			if (timerToGoldRushButton <= 0) {
+				switchButton ();
+				timerToGoldRushButton = 0.5f;
+			}
+		}
+		
 		if (lastLocationInfo.timestamp != Input.location.lastData.timestamp)
 		{
 			if (Time.time >= currentMapUpdate)
@@ -123,5 +157,9 @@ public class MapManager : MonoBehaviour
 	public void GoToShopScreen()
 	{
 		MasterManager.Instance.ChangeScene("shop");
+	}
+
+	public void goldRushButtonClick() {
+
 	}
 }
