@@ -29,10 +29,12 @@ public class TreasureChest : MonoBehaviour {
 
 		if (health == 0)
 		{
+			if (MasterManager.Instance != null)
 			AudioSource.PlayClipAtPoint(MasterManager.Instance.ChestExplode,transform.position);
 		}
 		else
 		{
+			if (MasterManager.Instance != null)
 			AudioSource.PlayClipAtPoint(MasterManager.Instance.ChestHit,transform.position);
 		}
 

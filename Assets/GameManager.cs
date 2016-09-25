@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour {
 			Destroy (gameObject);
 			return;
 		}
+		HideLaser();
 		instance = this;
 	}
 
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour {
 
 		Player.laserCount --;
 
+		if (MasterManager.Instance != null)
 		AudioSource.PlayClipAtPoint(MasterManager.Instance.Laser,Camera.main.transform.position);
 
 		LaserArt.SetActive(true);
