@@ -11,9 +11,12 @@ public class GameManager : MonoBehaviour {
 	public Color ShootButtonColor;
 	public Color ShootButtonColorEmpty;
 
+	public GameObject LaserArt;
+	public GameObject LaserImpact;
+
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
 
 	// Use this for initialization
@@ -43,12 +46,22 @@ public class GameManager : MonoBehaviour {
 			{
 				Debug.Log("chest hit");
 				tc.hit();
+				LaserImpact.SetActive(true);
 			}
 		}
 
 		Player.laserCount --;
 
 		AudioSource.PlayClipAtPoint(MasterManager.Instance.Laser,Camera.main.transform.position);
+
+		LaserArt.SetActive(true);
+		Invoke("HideLaser",0.1f);
+	}
+
+	void HideLaser()
+	{
+		LaserArt.SetActive(false);
+		LaserImpact.SetActive(false);
 	}
 
 	void RefreshShootButton()
