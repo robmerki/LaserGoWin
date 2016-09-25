@@ -11,13 +11,11 @@ public class GameManager : MonoBehaviour {
 	public Color ShootButtonColor;
 	public Color ShootButtonColorEmpty;
 
+	public Text LaserCountText;
+	public Image LaserCount;
+
 	public GameObject LaserArt;
 	public GameObject LaserImpact;
-
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	// Use this for initialization
 	void Start () {
@@ -54,11 +52,19 @@ public class GameManager : MonoBehaviour {
 
 		Player.laserCount --;
 
+		UpdateLaserCount();
+
 		if (MasterManager.Instance != null)
 		AudioSource.PlayClipAtPoint(MasterManager.Instance.Laser,Camera.main.transform.position);
 
 		LaserArt.SetActive(true);
 		Invoke("HideLaser",0.1f);
+	}
+
+	void UpdateLaserCount()
+	{
+		LaserCountText.text = Player.laserCount.ToString();
+		LaserCount.color = Player.laserCount > 0 ? ShootButtonColor : ShootButtonColorEmpty;
 	}
 
 	void HideLaser()
