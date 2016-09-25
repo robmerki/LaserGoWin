@@ -22,7 +22,7 @@ public class TreasureChest : MonoBehaviour {
 		Player.awardChest (this);
 	}
 
-	bool hit() {
+	public bool hit() {
 		health = health - 1;
 		return (health <= 0);
 	}

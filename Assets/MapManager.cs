@@ -64,6 +64,7 @@ public class MapManager : MonoBehaviour
 				coords.text = lastLocationInfo.latitude + "\n" + lastLocationInfo.longitude + "\n" + lastLocationInfo.timestamp;
 			}
 		}
+		//if (Input.GetTouch(0)
 	}
 
 	string key = "AIzaSyA3PCTWtIVqJkbp41RlYFsrba3eCkY8aTA";
