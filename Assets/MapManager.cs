@@ -39,17 +39,21 @@ public class MapManager : MonoBehaviour
 		"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.279406,-123.122609",
 		"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.276736,-123.121911",
 		"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.276006,-123.127235"
-
-		/*
-		"&markers=color:red%7Clabel:C%7C49.2890615,-123.1412927",
-		"&markers=color:red%7Clabel:C%7C49.281148,-123.119334",
-		"&markers=color:red%7Clabel:C%7C49.283039,-123.115147",
-		"&markers=color:red%7Clabel:C%7C49.278847,-123.116423",
-		"&markers=color:red%7Clabel:C%7C49.279406,-123.122609",
-		"&markers=color:red%7Clabel:C%7C49.276736,-123.121911",
-		"&markers=color:red%7Clabel:C%7C49.276006,-123.127235"
-		*/
 	};
+
+	List<string> superMarkers = new List<string>
+	{
+		//"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.2890615,-123.1412927",
+
+		"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.282428,-123.1412927",
+		"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.281148,-123.119334",
+		"&markers=icon:http://i.imgur.com/fOhHSpr.png%7C%7C49.283039,-123.115147",
+		"&markers=icon:http://i.imgur.com/fOhHSpr.png%7C%7C49.278847,-123.116423",
+		"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.279406,-123.122609",
+		"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.276736,-123.121911",
+		"&markers=icon:http://i.imgur.com/7jbGAnD.png%7C%7C49.276006,-123.127235"
+	};
+
 
 	void Enable()
 	{
@@ -133,9 +137,14 @@ public class MapManager : MonoBehaviour
 
 		//url = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lon+"&zoom="+zoom+"&size="+size.x+"x"+size.y;
 
-		foreach (var m in markers)
-		{
-			url += m;
+		if (goldRush == false) {
+			foreach (var m in markers) {
+				url += m;
+			}
+		} else {
+			foreach (var m in superMarkers) {
+				url += m;
+			}
 		}
 
 		//url += "&key="+"AIzaSyA3PCTWtIVqJkbp41RlYFsrba3eCkY8aTA";
@@ -159,7 +168,10 @@ public class MapManager : MonoBehaviour
 		MasterManager.Instance.ChangeScene("shop");
 	}
 
-	public void goldRushButtonClick() {
+	bool goldRush;
 
+	public void goldRushButtonClick() {
+		goldRush = true;
+		StartCoroutine(RequestMap(49.2813586f,-123.1171895f,14));
 	}
 }
