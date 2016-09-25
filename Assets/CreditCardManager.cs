@@ -3,13 +3,8 @@ using System.Collections;
 
 public class CreditCardManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	public void GoToShop()
+	{
+		MasterManager.Instance.ChangeScene("shop");
 	}
 }
