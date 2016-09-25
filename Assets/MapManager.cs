@@ -15,6 +15,7 @@ public class MapManager : MonoBehaviour
 	float timerToGoldRushButton;
 	bool buttonAppeared;
 	bool buttonFlash;
+	bool buttonsDone;
 
 	public Transform playerMapObject;
 	public Transform cameraObject;
@@ -67,6 +68,7 @@ public class MapManager : MonoBehaviour
 		timerToGoldRushButton = 10.0f;
 		buttonAppeared = false;
 		buttonFlash = true;
+		buttonsDone = false;
 	}
 
 	void switchButton() {
@@ -82,17 +84,19 @@ public class MapManager : MonoBehaviour
 
 	public void Update()
 	{
-		timerToGoldRushButton -= Time.deltaTime;
-		if (!buttonAppeared) {
-			if (timerToGoldRushButton <= 0) {
-				goldRushButton1.SetActive (true);
-				buttonAppeared = true;
-				timerToGoldRushButton = 0.5f;
-			}
-		} else {
-			if (timerToGoldRushButton <= 0) {
-				switchButton ();
-				timerToGoldRushButton = 0.5f;
+		if (!buttonsDone) {
+			timerToGoldRushButton -= Time.deltaTime;
+			if (!buttonAppeared) {
+				if (timerToGoldRushButton <= 0) {
+					goldRushButton1.SetActive (true);
+					buttonAppeared = true;
+					timerToGoldRushButton = 0.5f;
+				}
+			} else {
+				if (timerToGoldRushButton <= 0) {
+					switchButton ();
+					timerToGoldRushButton = 0.5f;
+				}
 			}
 		}
 		
@@ -173,5 +177,8 @@ public class MapManager : MonoBehaviour
 	public void goldRushButtonClick() {
 		goldRush = true;
 		StartCoroutine(RequestMap(49.2813586f,-123.1171895f,14));
+		goldRushButton1.SetActive (false);
+		goldRushButton2.SetActive (false);
+		buttonsDone = true;
 	}
 }
