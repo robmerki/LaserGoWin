@@ -7,13 +7,14 @@ using System;
 public class GameRunner : MonoBehaviour {
 	public GameObject normalChestPrefab;
 	public GameObject superChestPreFab;
-	public GameObject rewardPrefab;
+	public GameObject moneyRewardPrefab;
+	public GameObject laserRewardPrefab;
+	public GameObject gemRewardPrefab;
 	public float objectSpeed;
 	public List<GameObject> chests = new List<GameObject>();
-	public List<GameObject> animatingRewards = new List<GameObject>();
 	private GameObject parentImageTrackerObject;
 
-	private const float chestSpeed = 7.0f;
+	private const float chestSpeed = 4.0f;
 	private const int regChestRegGame = 6; // regular chests in regular game
 	private const int supChestRegGame = 0; // super chests in regular game
 	private const int regChestPowGame = 4; // regular chests in gold rush game
@@ -29,41 +30,46 @@ public class GameRunner : MonoBehaviour {
 	};
 	private int iterator = 0;
 	private Box box = new Box(new Vector3(0,0,1), 20.0f); // box bounding where the chests go
-	private DateTime timer;
 
 	// Use this for initialization
 	void Start () {
 	}
+
+
+	public void debugKillChest() {
+		chests [0].GetComponent<TreasureChest> ().markedForDeletion = true;
+	}
 		
 	// Update is called once per frame
 	void Update () {
-		// logic for killing chests every so often (presumably, will be replaced by lasers and also moved away)
-		if ((DateTime.Now - timer).Seconds > 4) {
-			timer = DateTime.Now;
-			GameObject chestRemove = removeAndReturnFromList (chests);
-			Vector3 coordStart = chestRemove.transform.position;
-			List<TreasureContents> contents = chestRemove.GetComponent<TreasureChest> ().contents;
-			Player.awardChest(chestRemove.GetComponent<TreasureChest> ());
-			Destroy (chestRemove);
-			foreach (TreasureContents content in contents) {
-				animateReward (content, coordStart);
-			}
-		}
-
-		// logic for moving chests around, should be moved onto chest class
+		// loop each chest
 		foreach (GameObject chestGameObj in chests) {
+			// if chest destroyed, continue
+			if (chestGameObj == null) continue;
+			// get chest obj
 			TreasureChest chest = chestGameObj.GetComponent<TreasureChest> ();
-			
-			chestGameObj.transform.position = Vector3.MoveTowards (
-				chestGameObj.transform.position,
-				chest.currentTarget,
-				(chest.goFast ? chestSpeed * 2 : chestSpeed) * Time.deltaTime
-			);
-			if (Vector3.Distance (chestGameObj.transform.position, chest.currentTarget) < 1.0f) {
-				chest.currentTarget = box.getRandPoint ();
+
+			// logic for chests that have been killed
+			if (chest.markedForDeletion) {
+				Vector3 coordStart = chestGameObj.transform.position;
+				List<TreasureContents> contents = chestGameObj.GetComponent<TreasureChest> ().contents;
+				Player.awardChest (chest);
+				Destroy (chestGameObj);
+				foreach (TreasureContents content in contents) {
+					animateReward (content, coordStart);
+				}
+			// logic for moving the chests around
+			} else {
+				chestGameObj.transform.position = Vector3.MoveTowards (
+					chestGameObj.transform.position,
+					chest.currentTarget,
+					(chest.goFast ? chestSpeed * 2 : chestSpeed) * Time.deltaTime
+				);
+				if (Vector3.Distance (chestGameObj.transform.position, chest.currentTarget) < 1.0f) {
+					chest.currentTarget = box.getRandPoint ();
+				}
 			}
 		}
-			
 	}
 		
 	GameObject removeAndReturnFromList(List<GameObject> list) {
@@ -73,17 +79,35 @@ public class GameRunner : MonoBehaviour {
 		list.RemoveAt(index);
 		return result;
 	}
-		
+
 	void animateReward (TreasureContents reward, Vector3 startLoc) {
-		GameObject go = (GameObject) GameObject.Instantiate (rewardPrefab, startLoc, Quaternion.identity);
-		go.GetComponent<TreasureRewardAnimator> ().set (reward);
-		animatingRewards.Add (go);
+		for (int i = 0; i < reward.treasureQualifier; i++) {
+			animateRewardSub (reward, startLoc);
+		}
+	}
+		
+	void animateRewardSub (TreasureContents reward, Vector3 startLoc) {
+		GameObject prefabToUse;
+		switch (reward.contentType) {
+		case "money":
+			prefabToUse = moneyRewardPrefab;
+			break;
+		case "gem":
+			prefabToUse = gemRewardPrefab;
+			break;
+		case "laser":
+			prefabToUse = laserRewardPrefab;
+			break;
+		default:
+			return;
+		}
+			
+		GameObject go = (GameObject) GameObject.Instantiate (prefabToUse, startLoc, Quaternion.identity);
 		Vector3 p1 = startLoc;
 		Vector3 p4 = new Vector3 (0, 0, 0);
 		float scale = 2.0f;
 		Vector3 p2 = ((p1+p4) * 3/4) + (Vector3.up * 3.0f) + new Vector3(UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale));
 		Vector3 p3 = ((p1+p4) * 1/4) + (Vector3.up * 3.0f) + new Vector3(UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale));
-
 		LeanTween.move (go, new LTBezierPath (new Vector3[] {p1,p2,p3,p4}), 2.0f);
 	}
 
@@ -101,8 +125,6 @@ public class GameRunner : MonoBehaviour {
 			for (int i = 0; i < supChestRegGame; i++)
 				AddTreasureChest (true).transform.SetParent(parentImageTrackerObject.transform);
 		}
-
-		timer = DateTime.Now;
 	}
 
 	// this tries to reset stuff when vuforia loses but then refinds the anchor, or a new anchor
@@ -136,8 +158,6 @@ public class GameRunner : MonoBehaviour {
 		return positions [iterator++];
 	}
 }
-
-
 
 public class Box {
 	private Vector3 boxCenter;

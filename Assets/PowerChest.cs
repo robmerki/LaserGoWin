@@ -6,6 +6,7 @@ public class PowerChest : TreasureChest {
 	// Use this for initialization
 	void Start () {
 		health = 2;
+		markedForDeletion = false;
 		int treasureNum = rnd.Next(1,7);
 
 		if (treasureNum < 5)

@@ -29,13 +29,14 @@ public class GameManager : MonoBehaviour {
 		instance = this;
 	}
 
-
 	//from a button press
 	public void Shoot()
 	{
 		if (gameRunner == null){return;}
 
 		if (Player.laserCount <= 0){return;}
+
+//		gameRunnerInstance.GetComponent<GameRunner> ().debugKillChest ();
 
 		RaycastHit hit;
 		if (Physics.Raycast(Camera.main.transform.position,Camera.main.transform.forward,out hit, 1000))
