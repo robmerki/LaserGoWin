@@ -30,7 +30,6 @@ public class GameRunner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		debug = GameObject.Find ("DEBUG").GetComponent<Text>();
 	}
 		
 	// Update is called once per frame
