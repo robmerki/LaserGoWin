@@ -54,6 +54,12 @@ public class GameRunner : MonoBehaviour {
 				Vector3 coordStart = chestGameObj.transform.position;
 				List<TreasureContents> contents = chestGameObj.GetComponent<TreasureChest> ().contents;
 				Player.awardChest (chest);
+				if (MasterManager.Instance != null)
+				{
+					
+
+					GameObject.Instantiate(MasterManager.Instance.ExplodeParticle,coordStart,Quaternion.identity);
+				}
 				Destroy (chestGameObj);
 				foreach (TreasureContents content in contents) {
 					animateReward (content, coordStart);
