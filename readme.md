@@ -19,7 +19,6 @@ Powerups are meant to increase foot traffic to BCLC locations, such as Lottery C
 ### APIs Used
 * Vuforia
 * Google Maps
-* Stripe (test mode)
 
 ### Team Members
 * Calder Archinuk
