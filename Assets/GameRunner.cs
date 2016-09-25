@@ -2,21 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class GameRunner : MonoBehaviour {
 	public GameObject normalChestPrefab;
 	public GameObject superChestPreFab;
+	public GameObject rewardPrefab;
 	public float objectSpeed;
 	public List<GameObject> chests = new List<GameObject>();
+	public List<GameObject> animatingRewards = new List<GameObject>();
 	private GameObject parentImageTrackerObject;
 
-	public Text debug;
+	private const float chestSpeed = 7.0f;
+	private const int regChestRegGame = 6; // regular chests in regular game
+	private const int supChestRegGame = 0; // super chests in regular game
+	private const int regChestPowGame = 4; // regular chests in gold rush game
+	private const int supChestPowGame = 2; // super chests in gold rush game
 
-	private const float chestSpeed = 10.0f;
-	private const int regChestRegGame = 6;
-	private const int supChestRegGame = 0;
-	private const int regChestPowGame = 4;
-	private const int supChestPowGame = 2;
 	private Vector3[] positions = {
 		new Vector3 (-3f, -3f, 1f),
 		new Vector3 (3f, -3f, 1f),
@@ -26,7 +28,8 @@ public class GameRunner : MonoBehaviour {
 		new Vector3 (3f, 3f, 1f)
 	};
 	private int iterator = 0;
-	private Box box = new Box(new Vector3(0,0,1), 20.0f);
+	private Box box = new Box(new Vector3(0,0,1), 20.0f); // box bounding where the chests go
+	private DateTime timer;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +37,20 @@ public class GameRunner : MonoBehaviour {
 		
 	// Update is called once per frame
 	void Update () {
+		// logic for killing chests every so often (presumably, will be replaced by lasers and also moved away)
+		if ((DateTime.Now - timer).Seconds > 4) {
+			timer = DateTime.Now;
+			GameObject chestRemove = removeAndReturnFromList (chests);
+			Vector3 coordStart = chestRemove.transform.position;
+			List<TreasureContents> contents = chestRemove.GetComponent<TreasureChest> ().contents;
+			Player.awardChest(chestRemove.GetComponent<TreasureChest> ());
+			Destroy (chestRemove);
+			foreach (TreasureContents content in contents) {
+				animateReward (content, coordStart);
+			}
+		}
+
+		// logic for moving chests around, should be moved onto chest class
 		foreach (GameObject chestGameObj in chests) {
 			TreasureChest chest = chestGameObj.GetComponent<TreasureChest> ();
 			
@@ -46,6 +63,28 @@ public class GameRunner : MonoBehaviour {
 				chest.currentTarget = box.getRandPoint ();
 			}
 		}
+			
+	}
+		
+	GameObject removeAndReturnFromList(List<GameObject> list) {
+		// int index = list.FindIndex( SOME_PARAMETER_IN );
+		int index = 0;
+		GameObject result = list[index];
+		list.RemoveAt(index);
+		return result;
+	}
+		
+	void animateReward (TreasureContents reward, Vector3 startLoc) {
+		GameObject go = (GameObject) GameObject.Instantiate (rewardPrefab, startLoc, Quaternion.identity);
+		go.GetComponent<TreasureRewardAnimator> ().set (reward);
+		animatingRewards.Add (go);
+		Vector3 p1 = startLoc;
+		Vector3 p4 = new Vector3 (0, 0, 0);
+		float scale = 2.0f;
+		Vector3 p2 = ((p1+p4) * 3/4) + (Vector3.up * 3.0f) + new Vector3(UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale));
+		Vector3 p3 = ((p1+p4) * 1/4) + (Vector3.up * 3.0f) + new Vector3(UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale),UnityEngine.Random.Range(-scale,scale));
+
+		LeanTween.move (go, new LTBezierPath (new Vector3[] {p1,p2,p3,p4}), 2.0f);
 	}
 
 	public void StartGame(bool powered, GameObject parentImageTrackerObjectIn) {
@@ -53,21 +92,24 @@ public class GameRunner : MonoBehaviour {
 
 		if (powered) {
 			for (int i = 0; i < regChestPowGame; i++) 
-				AddTreasureChest (false).transform.SetParent(parentImageTrackerObject.transform);;
+				AddTreasureChest (false).transform.SetParent(parentImageTrackerObject.transform);
 			for (int i = 0; i < supChestPowGame; i++)
-				AddTreasureChest (true).transform.SetParent(parentImageTrackerObject.transform);;
+				AddTreasureChest (true).transform.SetParent(parentImageTrackerObject.transform);
 		} else {
 			for (int i = 0; i < regChestRegGame; i++)
-				AddTreasureChest (false).transform.SetParent(parentImageTrackerObject.transform);;
+				AddTreasureChest (false).transform.SetParent(parentImageTrackerObject.transform);
 			for (int i = 0; i < supChestRegGame; i++)
-				AddTreasureChest (true).transform.SetParent(parentImageTrackerObject.transform);;
+				AddTreasureChest (true).transform.SetParent(parentImageTrackerObject.transform);
 		}
+
+		timer = DateTime.Now;
 	}
 
-	// does this even work
+	// this tries to reset stuff when vuforia loses but then refinds the anchor, or a new anchor
 	public void reattachChests(GameObject parentImageTrackerObjectIn) {
+		// todo: see if cube needs to reset?? positions of currently moving boxes?????????
+		// other todo: kill old cauldron, make new one. currently each anchor will have its own cauldron
 		parentImageTrackerObject = parentImageTrackerObjectIn;
-
 		foreach (GameObject gc in chests) {
 			gc.transform.SetParent(parentImageTrackerObject.transform);
 		}
@@ -95,6 +137,8 @@ public class GameRunner : MonoBehaviour {
 	}
 }
 
+
+
 public class Box {
 	private Vector3 boxCenter;
 	private float boxWidth;
@@ -113,7 +157,7 @@ public class Box {
 	}
 
 	public Vector3 getRandPoint() {
-		return new Vector3 (Random.Range (x1, x2), Random.Range (y1, y2), Random.Range (z1, z2) );
+		return new Vector3 (UnityEngine.Random.Range (x1, x2), UnityEngine.Random.Range (y1, y2), UnityEngine.Random.Range (z1, z2) );
 	}
 
 }

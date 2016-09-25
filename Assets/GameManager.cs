@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour {
 
 	public void trackingFound (GameObject imageTrackerObject) {
 		if (gameRunnerInstance != null) {
-			gameRunnerInstance.GetComponent<GameRunner>().reattachChests (imageTrackerObject);
+			// commenting this out for now
+			// gameRunnerInstance.GetComponent<GameRunner>().reattachChests (imageTrackerObject);
 			return;
 		}
 		// todo: turn off all other image trackers?
