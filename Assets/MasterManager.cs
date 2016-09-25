@@ -36,6 +36,8 @@ public class MasterManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 		Instance = this;
 
+		return;
+
 		Pools.Add("chest",new List<GameObject>());
 		Pools.Add("superchest",new List<GameObject>());
 		Pools.Add("gem",new List<GameObject>());
