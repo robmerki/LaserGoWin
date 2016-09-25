@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		HideLaser();
+		UpdateLaserCount();
+		RefreshShootButton();
 		instance = this;
 	}
 
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour {
 	void UpdateLaserCount()
 	{
 		LaserCountText.text = Player.laserCount.ToString();
-		LaserCount.color = Player.laserCount > 0 ? ShootButtonColor : ShootButtonColorEmpty;
+		//LaserCount.color = Player.laserCount > 0 ? ShootButtonColor : ShootButtonColorEmpty;
 	}
 
 	void HideLaser()
@@ -83,6 +85,11 @@ public class GameManager : MonoBehaviour {
 	public void GoToMapScreen()
 	{
 		MasterManager.Instance.ChangeScene("MapScreen");
+	}
+
+	public void GoToShopScreen()
+	{
+		MasterManager.Instance.ChangeScene("shop");
 	}
 
 	public void trackingFound (GameObject imageTrackerObject) {

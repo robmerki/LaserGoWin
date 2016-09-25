@@ -16,6 +16,11 @@ public class ShopManager : MonoBehaviour{
 		MasterManager.Instance.ChangeScene("MapScreen");
 	}
 
+	public void GoToGameScreen()
+	{
+		MasterManager.Instance.ChangeScene("GameScreen");
+	}
+
 	//every time the shop is opened
 	public void Start()
 	{
@@ -61,11 +66,11 @@ public class ShopManager : MonoBehaviour{
 	}
 
 	public void buyLaserButton() {
-		if (buyLaser (5)) {
+		/*if (buyLaser (5)) {
 			// success
 		} else {
 			// not enough money
-		}
+		}*/
 	}
 
 	public void buyGoldRushButton() {
@@ -77,12 +82,5 @@ public class ShopManager : MonoBehaviour{
 		}
 
 		UpdateNumbers();
-
-		return;
-		if (buyGoldRush (1)) {
-			// success
-		} else {
-			// not enough gems
-		}
 	}
 }
