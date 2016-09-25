@@ -7,6 +7,7 @@ public class NormalChest : TreasureChest {
 	void Start () {
 		health = 1;
 		contents.Add (new TreasureContents ());
+		goFast = false;
 	}
 	
 	// Update is called once per frame

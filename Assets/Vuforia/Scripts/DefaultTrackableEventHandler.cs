@@ -31,11 +31,28 @@ namespace Vuforia
             {
                 mTrackableBehaviour.RegisterTrackableEventHandler(this);
             }
+
+			VuforiaBehaviour.Instance.RegisterVuforiaStartedCallback(OnVuforiaStarted);
+			VuforiaBehaviour.Instance.RegisterOnPauseCallback(OnPaused);
         }
 
         #endregion // UNTIY_MONOBEHAVIOUR_METHODS
 
+		private void OnVuforiaStarted()
+		{
+			CameraDevice.Instance.SetFocusMode(
+				CameraDevice.FocusMode.FOCUS_MODE_CONTINUOUSAUTO);
+		}
 
+		private void OnPaused(bool paused)
+		{
+			if (!paused) // resumed
+			{
+				// Set again autofocus mode when app is resumed
+				CameraDevice.Instance.SetFocusMode(
+					CameraDevice.FocusMode.FOCUS_MODE_CONTINUOUSAUTO);
+			}
+		}
 
         #region PUBLIC_METHODS
 
@@ -68,6 +85,10 @@ namespace Vuforia
 
         private void OnTrackingFound()
         {
+			// pass game manager the image target GameObject
+			GameManager.instance.trackingFound (gameObject);
+
+			// VIEW4YA DEFAULT FUNCTIONALITY BELOW
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
 

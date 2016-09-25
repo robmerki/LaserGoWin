@@ -6,6 +6,10 @@ public class TreasureChest : MonoBehaviour {
 	public List<TreasureContents> contents = new List<TreasureContents>();
 	public System.Random rnd = new System.Random();
 	public int health;
+	[System.NonSerialized]
+	public Vector3 currentTarget;
+	[System.NonSerialized]
+	public bool goFast;
 
 	// Use this for initialization
 	void Start () {

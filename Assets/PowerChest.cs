@@ -21,6 +21,7 @@ public class PowerChest : TreasureChest {
 			tc.contentQuantity = tc.contentQuantity * 2;
 			contents.Add (tc);
 		}
+		goFast = true;
 	}
 	
 	// Update is called once per frame
