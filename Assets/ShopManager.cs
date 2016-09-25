@@ -6,6 +6,10 @@ public class ShopManager : MonoBehaviour{
 	public const float laserCost = 0.2f;
 	public const float goldRushCost = 10f;
 
+	public Text GemText;
+	public Text LaserText;
+	public Text GoldRushText;
+
 	public void GoToMapScreen()
 	{
 		Debug.Log("go to map screen");
