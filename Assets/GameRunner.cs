@@ -53,23 +53,28 @@ public class GameRunner : MonoBehaviour {
 
 		if (powered) {
 			for (int i = 0; i < regChestPowGame; i++) 
-				AddTreasureChest (false);
+				AddTreasureChest (false).transform.SetParent(parentImageTrackerObject.transform);;
 			for (int i = 0; i < supChestPowGame; i++)
-				AddTreasureChest (true);
+				AddTreasureChest (true).transform.SetParent(parentImageTrackerObject.transform);;
 		} else {
 			for (int i = 0; i < regChestRegGame; i++)
-				AddTreasureChest (false);
+				AddTreasureChest (false).transform.SetParent(parentImageTrackerObject.transform);;
 			for (int i = 0; i < supChestRegGame; i++)
-				AddTreasureChest (true);
+				AddTreasureChest (true).transform.SetParent(parentImageTrackerObject.transform);;
 		}
 	}
 
-	// todo
+	// does this even work
 	public void reattachChests(GameObject parentImageTrackerObjectIn) {
-		
+		parentImageTrackerObject = parentImageTrackerObjectIn;
+
+		foreach (GameObject gc in chests) {
+			gc.transform.SetParent(parentImageTrackerObject.transform);
+		}
 	}
 
-	private void AddTreasureChest(bool superChest) {
+	// return value: the GameObject object, not the TreasureChest object
+	private GameObject AddTreasureChest(bool superChest) {
 		GameObject go;
 		TreasureChest tc;
 		if (superChest) {
@@ -77,9 +82,9 @@ public class GameRunner : MonoBehaviour {
 		} else {
 			go = (GameObject) GameObject.Instantiate (superChestPreFab, getPos(), Quaternion.identity);
 		}
-		go.transform.SetParent(parentImageTrackerObject.transform);
 		go.GetComponent<TreasureChest> ().currentTarget = box.getRandPoint ();
 		chests.Add (go);
+		return go;
 	}
 
 	private Vector3 getPos() {
