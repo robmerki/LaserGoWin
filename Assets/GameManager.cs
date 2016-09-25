@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour {
 		}
 
 		Player.laserCount --;
-		//spend a laser
+
+		AudioSource.PlayClipAtPoint(MasterManager.Instance.Laser,Camera.main.transform.position);
 	}
 
 	void RefreshShootButton()
