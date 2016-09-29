@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour {
 		UpdateLaserCount();
 
 		if (MasterManager.Instance != null)
-		AudioSource.PlayClipAtPoint(MasterManager.Instance.Laser,Camera.main.transform.position);
+		AudioSource.PlayClipAtPoint(MasterManager.Instance.Laser,Camera.main.transform.position,0.75f);
 
 		LaserArt.SetActive(true);
 		Invoke("HideLaser",0.1f);

@@ -127,12 +127,15 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
+	//GOOGLE STATIC API KEY IS NOW INVALID. DEFAULT TO SOME VANCOUVER TEXTURE
 	string key = "AIzaSyA3PCTWtIVqJkbp41RlYFsrba3eCkY8aTA";
 	LocationInfo li;
 	Vector2 size = new Vector2(2048,2048);
 
 	public IEnumerator RequestMap(float lat, float lon, float zoom)
 	{
+		yield break;
+
 		//lock this down!
 		string url = "";
 
@@ -160,6 +163,9 @@ public class MapManager : MonoBehaviour
 		yield return www;
 
 		mapMat.mainTexture = www.texture;
+		byte[] tex = www.texture.EncodeToPNG();
+		System.IO.File.WriteAllBytes("demogooglemap.png",tex);
+
 	}
 
 	public void GoToGameScreen()
